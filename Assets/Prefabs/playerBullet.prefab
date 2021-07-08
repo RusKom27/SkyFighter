@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6439974760043589593}
   - component: {fileID: 4694402094769815562}
   m_Layer: 0
-  m_Name: bullet
+  m_Name: playerBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.026823834, y: 0.2023865}
@@ -123,8 +123,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e10fba11a39a8845b6a2e3005f1fceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed_: 10
-  fromPlayer_: 1
+  speed: 6
+  fromPlayer: 1
 --- !u!50 &4694402094769815562
 Rigidbody2D:
   serializedVersion: 4
