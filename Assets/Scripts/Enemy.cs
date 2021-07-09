@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     private GameObject gun1, gun2;
+    
 
     void Start()
     {
