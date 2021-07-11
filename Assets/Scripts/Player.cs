@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +5,14 @@ public class Player : MonoBehaviour
 {
     public float speed = 10f;
     public int health = 5000;
+    public bool freezed = false;
     public GameObject missile;
 
     private Rigidbody2D rigidBody;
     private GameObject gun1, gun2;
     private GameObject livesBoard;
 
-    void Start()
+    private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         gun1 = transform.GetChild(0).gameObject;
@@ -22,14 +21,21 @@ public class Player : MonoBehaviour
         livesBoard.GetComponent<Text>().text = "Lives: " + health;
     }
 
-    void Update()
+    private void Update()
     {
-        
-        rigidBody.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rigidBody.velocity.y);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!freezed)
         {
-            Shoot();
+            rigidBody.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, rigidBody.velocity.y);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Shoot();
+            }
         }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 
     public void TakeDamage(int damage)
@@ -39,12 +45,12 @@ public class Player : MonoBehaviour
         else if (health <= 1)
         {
             livesBoard.GetComponent<Text>().text = "Lives: 0";
-            Destroy(gameObject);
+            Die();
         }
         livesBoard.GetComponent<Text>().text = "Lives: " + health;
     }
 
-    void Shoot()
+    private void Shoot()
     {        
         Instantiate(missile, gun1.transform.position, Quaternion.Euler(0f, 0f, 0f));
         Instantiate(missile, gun2.transform.position, Quaternion.Euler(0f, 0f, 0f));

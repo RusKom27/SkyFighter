@@ -1,30 +1,44 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public bool freezed = false;
     public GameObject enemyPrefab; 
     public int timeBetweenSpawn; 
     public int enemyAmount; 
 
     private float[] placesX;
+    //private List<GameObject> enemies;
+    private GameObject enemies;
 
     private void Start()
     {
         placesX = new float[transform.childCount];
+        enemies = GameObject.Find("Enemies");
         for (int i = 0; i < placesX.Length; i++)
         {
             placesX[i] = transform.GetChild(i).position.x;
         }
         StartCoroutine(spawnEnemy());
     }
+
+    public void DeleteEnemies()
+    {
+        for (int i = 0; i < enemies.transform.childCount; i++)
+        {
+            Destroy(enemies.transform.GetChild(i).gameObject);
+        }
+    }
+
     private IEnumerator spawnEnemy()
     {
         int countSpawn = 0; 
-        while (countSpawn < enemyAmount)
+        while (!freezed)
         {
             countSpawn++;
-            Instantiate(enemyPrefab, new Vector3(placesX[Random.Range(0,placesX.Length - 1)], transform.position.y, transform.position.z), Quaternion.identity);
+            Instantiate(enemyPrefab, new Vector3(placesX[Random.Range(0,placesX.Length - 1)], transform.position.y, transform.position.z), Quaternion.identity,enemies.transform);
 
             if (countSpawn % 10 == 0 && countSpawn <= 10)
             {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6375380840481359084}
   - component: {fileID: -6439974760043589593}
   - component: {fileID: 4694402094769815562}
+  - component: {fileID: 6862089597490279580}
   m_Layer: 0
   m_Name: enemyBullet
   m_TagString: Untagged
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e10fba11a39a8845b6a2e3005f1fceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -6
+  speed: -4
   fromPlayer: 0
 --- !u!50 &4694402094769815562
 Rigidbody2D:
@@ -146,3 +147,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
+--- !u!95 &6862089597490279580
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6774137551469867407}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9a28172bdd454ac46a1940e4326b77f4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

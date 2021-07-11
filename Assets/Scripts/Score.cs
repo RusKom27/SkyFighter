@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,12 +6,12 @@ public class Score : MonoBehaviour
     public int score = 0;
 
     private Text text;
-    void Start()
+    private void Start()
     {
         text = GetComponent<Text>();
     }
 
-    void Update()
+    private void Update()
     {
         text.text = "Score: " + score;
     }
