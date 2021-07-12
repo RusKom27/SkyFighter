@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rigidBody;
     private GameObject gun1, gun2;
-    private GameObject livesBoard;
+    private GameObject livesBoard, bullets;
 
     private void Start()
     {
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         gun1 = transform.GetChild(0).gameObject;
         gun2 = transform.GetChild(1).gameObject;
         livesBoard = GameObject.Find("Lives");
+        bullets = GameObject.Find("Bullets");
         livesBoard.GetComponent<Text>().text = "Lives: " + health;
     }
 
@@ -30,6 +31,10 @@ public class Player : MonoBehaviour
             {
                 Shoot();
             }
+        }
+        else
+        {
+            rigidBody.velocity = new Vector2(0, 0);
         }
     }
 
@@ -52,7 +57,7 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {        
-        Instantiate(missile, gun1.transform.position, Quaternion.Euler(0f, 0f, 0f));
-        Instantiate(missile, gun2.transform.position, Quaternion.Euler(0f, 0f, 0f));
+        Instantiate(missile, gun1.transform.position, Quaternion.Euler(0f, 0f, 0f), bullets.transform);
+        Instantiate(missile, gun2.transform.position, Quaternion.Euler(0f, 0f, 0f), bullets.transform);
     }
 }

@@ -10,16 +10,17 @@ public class Enemy : MonoBehaviour
     public GameObject missile;
 
     private Rigidbody2D rigidBody;
-    private GameObject gun1, gun2;
+    private GameObject gun1, gun2, bullets;
     private Animator animator;
 
-    void Start()
+    private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         gun1 = transform.GetChild(0).gameObject;
         gun2 = transform.GetChild(1).gameObject;
         animator = GetComponent<Animator>();
-        
+        bullets = GameObject.Find("Bullets");
+
 
         StartCoroutine(Shoot());
     }
@@ -51,13 +52,12 @@ public class Enemy : MonoBehaviour
         {
             if (!freezed)
             {
-                Instantiate(missile, gun1.transform.position, Quaternion.Euler(0f, 0f, 0f));
+                Instantiate(missile, gun1.transform.position, Quaternion.Euler(0f, 0f, 0f), bullets.transform);
 
-                Instantiate(missile, gun2.transform.position, Quaternion.Euler(0f, 0f, 0f));
-
-                yield return new WaitForSeconds(attackSpeed);
-            }
+                Instantiate(missile, gun2.transform.position, Quaternion.Euler(0f, 0f, 0f), bullets.transform);
+            }    
             
+            yield return new WaitForSeconds(attackSpeed);
         }
     }
 }

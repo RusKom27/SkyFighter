@@ -15,7 +15,6 @@ public class Bullet : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         scoreBoard = GameObject.Find("Score");
-        bullets = GameObject.Find("Bullets");
     }
 
     private void Update()
@@ -31,30 +30,22 @@ public class Bullet : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void DeleteBullets()
-    {
-        for (int i = 0; i < bullets.transform.childCount; i++)
-        {
-            Destroy(bullets.transform.GetChild(i).gameObject);
-        }
-    }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag.Equals("Wall"))
         {
-            animator.SetBool("death", true);
             rigidBody.velocity = new Vector2(0, 0);
+            animator.SetBool("death", true);
         }
         else if (fromPlayer)
         {
             if (collision.tag.Equals("Enemy"))
             {
-                collision.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+                collision.GetComponent<Enemy>().freezed = true;
+                freezed = !freezed;
                 collision.GetComponent<Animator>().SetBool("death", true);
                 scoreBoard.GetComponent<Score>().score += 1;
-                rigidBody.velocity = new Vector2(0, 0);
                 animator.SetBool("death", true);
             }
         }
@@ -63,7 +54,7 @@ public class Bullet : MonoBehaviour
             if (collision.tag.Equals("Player"))
             {
                 collision.GetComponent<Player>().TakeDamage(1);
-                rigidBody.velocity = new Vector2(0, 0);
+                freezed = !freezed;
                 animator.SetBool("death", true);
             }
         }

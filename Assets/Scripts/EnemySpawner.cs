@@ -10,13 +10,13 @@ public class EnemySpawner : MonoBehaviour
     public int enemyAmount; 
 
     private float[] placesX;
-    //private List<GameObject> enemies;
-    private GameObject enemies;
+    private GameObject enemies, bullets;
 
     private void Start()
     {
         placesX = new float[transform.childCount];
         enemies = GameObject.Find("Enemies");
+        bullets = GameObject.Find("Bullets");
         for (int i = 0; i < placesX.Length; i++)
         {
             placesX[i] = transform.GetChild(i).position.x;
@@ -32,13 +32,24 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    public void DeleteBullets()
+    {
+        for (int i = 0; i < bullets.transform.childCount; i++)
+        {
+            Destroy(bullets.transform.GetChild(i).gameObject);
+        }
+    }
+
     private IEnumerator spawnEnemy()
     {
         int countSpawn = 0; 
-        while (!freezed)
+        while (true)
         {
-            countSpawn++;
-            Instantiate(enemyPrefab, new Vector3(placesX[Random.Range(0,placesX.Length - 1)], transform.position.y, transform.position.z), Quaternion.identity,enemies.transform);
+            if(!freezed)
+            {
+                countSpawn++;
+                Instantiate(enemyPrefab, new Vector3(placesX[Random.Range(0, placesX.Length - 1)], transform.position.y, transform.position.z), Quaternion.identity, enemies.transform);
+            }
 
             if (countSpawn % 10 == 0 && countSpawn <= 10)
             {
