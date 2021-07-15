@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
+    public GameObject tv;
+
     private Animator animator;
 
     private void Start()
@@ -12,6 +14,14 @@ public class Button : MonoBehaviour
     }
     public void OnOff()
     {
-        animator.SetBool("on", !animator.GetBool("on"));
+        if (tv)
+        {
+
+            GetComponent<Animator>().SetTrigger("transition");
+            animator.SetBool("on", !tv.GetComponent<TV>().onMenu);
+        }
+            
+        else
+            animator.SetBool("on", !animator.GetBool("on"));
     }
 }

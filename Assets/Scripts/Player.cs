@@ -11,9 +11,11 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigidBody;
     private GameObject gun1, gun2;
     private GameObject livesBoard, bullets;
+    public GameObject tv;
 
     private void Start()
     {
+        tv = GameObject.Find("TV");
         rigidBody = GetComponent<Rigidbody2D>();
         gun1 = transform.GetChild(0).gameObject;
         gun2 = transform.GetChild(1).gameObject;
@@ -40,7 +42,8 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject);
+        tv.GetComponent<TV>().GameOver();
+        gameObject.SetActive(false);
     }
 
     public void TakeDamage(int damage)

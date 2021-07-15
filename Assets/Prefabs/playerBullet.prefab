@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e10fba11a39a8845b6a2e3005f1fceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 7
   fromPlayer: 1
   freezed: 0
 --- !u!50 &4694402094769815562

@@ -8,7 +8,7 @@ public class TV : MonoBehaviour
     public bool onMenu = true;
     public bool onGame = false;
 
-    private GameObject player, enemySpawner, enemies, bullets, scores, lives, pauseText, menuAnim;
+    private GameObject player, enemySpawner, enemies, bullets, scores, lives, pauseText, deathText, menuAnim;
     private Animator animator;
 
     private void Start()
@@ -17,29 +17,42 @@ public class TV : MonoBehaviour
         enemies = GameObject.Find("Enemies");
         enemySpawner = GameObject.Find("EnemySpawner");
         bullets = GameObject.Find("Bullets");
-        scores = GameObject.Find("Scores");
+        scores = GameObject.Find("Score");
         lives = GameObject.Find("Lives");
         menuAnim = GameObject.Find("MenuAnimation");
         pauseText = GameObject.Find("PauseText");
+        deathText = GameObject.Find("DeathText");
         animator = GetComponent<Animator>();
+        deathText.SetActive(false);
         pauseText.SetActive(false);
-        ChangeState(onGame, onMenu, onPause);
+        ChangeState();
     }
 
     private void Update()
     {
         Debug.Log("G: " + onGame + " M: " + onMenu + " P: " + onPause);
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !onMenu)
         {
             onPause = !onPause;
             onGame = !onGame;
-            ChangeState(onGame, onMenu, onPause);
+            ChangeState();
         }
     }
 
     public void ChangeStateMenu()
     {
-        onMenu = !onMenu;
+        if (onPause)
+        {
+            onMenu = !onMenu;
+            onPause = !onPause;
+        }
+        else if (!onPause)
+        {
+            onMenu = !onMenu;
+            onGame = !onGame;
+        }
+        
+        ChangeState();
     }
 
     public void Exit()
@@ -47,7 +60,12 @@ public class TV : MonoBehaviour
 
     }
 
-    public void ChangeState(bool onGame, bool onMenu, bool onPause)
+    public void GameOver()
+    {
+        deathText.SetActive(true);
+    }
+
+    public void ChangeState()
     {
         if (onPause)
         {
@@ -62,15 +80,25 @@ public class TV : MonoBehaviour
             {
                 bullets.transform.GetChild(i).GetComponent<Bullet>().freezed = true;
             }
+            deathText.SetActive(false);
             pauseText.SetActive(true);
         }
-        else if (onMenu)
+        if (onMenu)
         {
             menuAnim.SetActive(true);
-
+            enemySpawner.GetComponent<EnemySpawner>().DeleteEnemies();
+            enemySpawner.GetComponent<EnemySpawner>().DeleteBullets();
+            enemySpawner.GetComponent<EnemySpawner>().freezed = true;
+            deathText.SetActive(false);
+            player.SetActive(false);
         }
-        else if (onGame)
+        if (onGame)
         {
+            deathText.SetActive(false);
+            player.GetComponent<Player>().health = 10;
+            scores.GetComponent<Score>().score = 0;
+            player.SetActive(true);
+            enemySpawner.GetComponent<EnemySpawner>().freezed = false;
             menuAnim.SetActive(false);
             enemySpawner.GetComponent<EnemySpawner>().freezed = false;
             player.GetComponent<Player>().freezed = false;
